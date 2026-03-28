@@ -307,6 +307,7 @@ class _HomeScreenState extends State<HomeScreen> {
     
     final nameController = TextEditingController();
     int selectedMinutes = 60;
+    String selectedCategory = 'social';
 
     showModalBottomSheet(
       context: context,
@@ -370,6 +371,37 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 24),
+                Text(
+                  lang.getString('Category', '分类'),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Wrap(
+                  spacing: 8,
+                  children: [
+                    'social',
+                    'entertainment',
+                    'game',
+                    'news',
+                    'shopping',
+                    'other',
+                  ].map((cat) {
+                    final isSelected = selectedCategory == cat;
+                    return ChoiceChip(
+                      label: Text(AppCategory.getName(cat)),
+                      selected: isSelected,
+                      onSelected: (selected) {
+                        if (selected) {
+                          setState(() => selectedCategory = cat);
+                        }
+                      },
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 24),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -379,6 +411,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           id: DateTime.now().millisecondsSinceEpoch.toString(),
                           userId: auth.user!.id,
                           appName: nameController.text,
+                          category: selectedCategory,
                           dailyLimitMinutes: selectedMinutes,
                           createdAt: DateTime.now(),
                         );
