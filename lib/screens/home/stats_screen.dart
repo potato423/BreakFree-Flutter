@@ -98,7 +98,7 @@ class StatsScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 12),
-              _buildAchievements(profile?.streakDays ?? 0, lang),
+              _buildAchievements(context, profile?.streakDays ?? 0, lang),
             ],
           ),
         ),
@@ -248,7 +248,7 @@ class StatsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAchievements(int streakDays, LanguageProvider lang) {
+  Widget _buildAchievements(BuildContext context, int streakDays, LanguageProvider lang) {
     final achievements = [
       {'icon': '🔥', 'title': '3 Day Streak', 'desc': '3天连续', 'unlocked': streakDays >= 3},
       {'icon': '🌟', 'title': '7 Day Streak', 'desc': '7天连续', 'unlocked': streakDays >= 7},
